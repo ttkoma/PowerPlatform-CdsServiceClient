@@ -286,6 +286,16 @@ namespace Microsoft.PowerPlatform.Cds.Client
 		private CdsTraceLogger logEntry { get; set; }
 
 		/// <summary>
+		/// Returns Logs from this process. 
+		/// </summary>
+		/// <returns></returns>
+		internal IEnumerable<Tuple<DateTime, string>> GetAllLogs()
+		{
+			return this.logEntry == null ? Enumerable.Empty<Tuple<DateTime, string>>() : this.logEntry.Logs;
+		}
+
+
+		/// <summary>
 		/// if set to true, the log provider is set locally
 		/// </summary>
 		public bool isLogEntryCreatedLocaly { get; set; }
@@ -1960,8 +1970,13 @@ namespace Microsoft.PowerPlatform.Cds.Client
 				string authToken = string.Empty;
 				string resource = string.Empty; // not used here..
 
+				// Develop authority here. 
+				// Form challenge for global disco
+				Uri authChallengeUri = new Uri($"{discoveryServiceUri.Scheme}://{discoveryServiceUri.DnsSafeHost}/api/aad/challenge");
+
 				// Execute Authentication Request and return token And ServiceURI
-				authToken = ExecuteAuthenticateServiceProcess(discoveryServiceUri, clientCredentials, loginCertificate, user, clientId, redirectUri, promptBehavior, tokenCachePath, isOnPrem, authority, out targetServiceUrl, out authContext, out resource, out user, logSink, useDefaultCreds: useDefaultCreds, addVersionInfoToUri:false);
+				//Uri targetResourceRequest = new Uri(string.Format("{0}://{1}/api/discovery/", discoveryServiceUri.Scheme , discoveryServiceUri.DnsSafeHost)); 
+				authToken = ExecuteAuthenticateServiceProcess(authChallengeUri, clientCredentials, loginCertificate, user, clientId, redirectUri, promptBehavior, tokenCachePath, isOnPrem, authority, out targetServiceUrl, out authContext, out resource, out user, logSink, useDefaultCreds: useDefaultCreds, addVersionInfoToUri:false);
 
 				// Get the GD Info and return. 
 				return QueryGlobalDiscovery(authToken, discoveryServiceUri, logSink).Result;

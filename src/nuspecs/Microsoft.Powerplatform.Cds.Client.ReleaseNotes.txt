@@ -9,6 +9,13 @@ Notice:
     Note: that only OAuth, Certificate, ClientSecret Authentication types are supported at this time. 
 
 ++CURRENTRELEASEID++
+Corrected a bug in Org request to WebAPI operation when attempting to set fields to null values. 
+Added initial support for in memory log capture support. 
+
+0.2.14-Alpha:
+Update to internal support libraries
+
+0.2.8-Alpha:
 Fixed an issue with sovereign cloud discovery reference data that would prevent a future login control from picking the correct global discovery server. 
 
 0.2.7-Alpha: 

@@ -9,6 +9,12 @@ Notice:
 
 ++CURRENTRELEASEID++
     No Updates here. 
+
+0.2.14-Alpha:
+    Update to internal support libraries - fixes casting issue with messages in this library
+
+0.2.8-Alpha
+    No Updates here. 
     
 0.2.2-Alpha: 
     Updates from CDS Core libs. 
