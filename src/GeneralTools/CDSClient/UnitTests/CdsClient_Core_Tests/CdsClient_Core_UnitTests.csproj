@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <ProjectSpecificFx>true</ProjectSpecificFx>
@@ -11,7 +11,7 @@
   <Import Project="..\..\..\..\Build.Common.Core.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Cds.CoreAssemblies.Internal" Version="$(PackageVersion_CDSServerNuget)" />
+    <PackageReference Condition="$(IsExternalBuild) != true" Include="Microsoft.Cds.CoreAssemblies.Internal" Version="$(PackageVersion_CDSServerNuget)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="$(PackageVersion_Moq)" />
     <PackageReference Include="xunit" Version="$(PackageVersion_XUnit)" />

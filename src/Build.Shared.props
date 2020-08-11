@@ -1,0 +1,54 @@
+ <Project>
+
+     <PropertyGroup>
+         <IsExternalBuild>true</IsExternalBuild>
+     </PropertyGroup>
+
+     <PropertyGroup>
+        <PackageVersion_CDSClient>0.2.15</PackageVersion_CDSClient>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+     </PropertyGroup>
+         
+     <PropertyGroup>
+        <PackageVersion_Adal>3.19.8</PackageVersion_Adal>
+        <PackageVersion_RestClientRuntime>2.3.20</PackageVersion_RestClientRuntime>
+        <PackageVersion_Newtonsoft>10.0.3</PackageVersion_Newtonsoft>
+        <PackageVersion_XUnit>2.4.1</PackageVersion_XUnit>
+        <PackageVersion_Moq>4.14.5</PackageVersion_Moq>
+     </PropertyGroup>
+
+     <PropertyGroup>
+        <SignAssembly>false</SignAssembly>
+        <CoreAssembliesInternalDir>$(SolutionDir)..\..\..\internal-deps\$(PackageVersion_CDSClient)</CoreAssembliesInternalDir>
+     </PropertyGroup>
+     
+     <ItemGroup Label="Replacement of Microsoft.Cds.CoreAssemblies.Internal">
+        <Reference Include="Microsoft.Cds.Sdk">
+            <HintPath>$(CoreAssembliesInternalDir)\$(TargetFramework)\Microsoft.Cds.Sdk.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Cds.Sdk.Proxy">
+            <HintPath>$(CoreAssembliesInternalDir)\$(TargetFramework)\Microsoft.Cds.Sdk.Proxy.dll</HintPath>
+        </Reference>
+     </ItemGroup>
+
+     <!--<PropertyGroup Condition="$(ProjectName) == 'Microsoft.PowerPlatform.Cds.Client'">
+         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+     </PropertyGroup>-->
+     
+     <ItemGroup>
+         <InternalsVisibleTo Include="CdsClient_Core_UnitTests"></InternalsVisibleTo>
+         <InternalsVisibleTo Include="Microsoft.PowerPlatform.Cds.Client.Dynamics"></InternalsVisibleTo>
+     </ItemGroup>
+
+     <Target Name="AddInternalsVisibleTo" BeforeTargets="BeforeCompile" 
+             Condition="$(ProjectName) == 'Microsoft.PowerPlatform.Cds.Client'">
+       
+         <ItemGroup Condition="@(InternalsVisibleTo->Count()) > 0">
+             <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+                <_Parameter1>%(InternalsVisibleTo.Identity)</_Parameter1>
+            </AssemblyAttribute>
+        </ItemGroup>
+
+     </Target>
+
+ </Project>

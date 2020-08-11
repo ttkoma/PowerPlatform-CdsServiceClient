@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.PowerPlatform.Cds.Client.Dynamics</RootNamespace>
@@ -11,13 +11,17 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(IsExternalBuild) != True">
     <PackageReference Include="Microsoft.Cds.CoreAssemblies.Internal" Version="$(PackageVersion_CDSServerNuget)">
       <IncludeAssets></IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Dynamics.Sdk.Messages.Internal" Version="$(PackageVersion_CDSServerNuget)">
       <IncludeAssets></IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IsExternalBuild) == True">
+    <PackageReference Include="Microsoft.Dynamics.Sdk.Messages" Version="0.2.15-Alpha" />
   </ItemGroup>
 
   <ItemGroup>
